@@ -132,7 +132,7 @@ class AnnotationBundleLoader extends FileLoader
      *
      * @return string|false Full class name if found, false otherwise
      */
-    protected function findClass($file)
+    protected function findClass(string $file)
     {
         $class = false;
         $namespace = false;

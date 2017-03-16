@@ -115,7 +115,7 @@ class SymfonyFrontendRequestHandler implements RequestHandlerInterface
      *
      * @return null|ResponseInterface
      */
-    public function handleRequest(ServerRequestInterface $request)
+    public function handleRequest(ServerRequestInterface $request): ?ResponseInterface
     {
         $response = null;
         $this->request = $request;
@@ -404,7 +404,7 @@ class SymfonyFrontendRequestHandler implements RequestHandlerInterface
      * Initializes output compression when enabled, could be split up and put into Bootstrap
      * at a later point.
      */
-    protected function initializeOutputCompression()
+    protected function initializeOutputCompression(): void
     {
         if ($GLOBALS['TYPO3_CONF_VARS']['FE']['compressionLevel'] && extension_loaded('zlib')) {
             if (MathUtility::canBeInterpretedAsInteger($GLOBALS['TYPO3_CONF_VARS']['FE']['compressionLevel'])) {
@@ -417,7 +417,7 @@ class SymfonyFrontendRequestHandler implements RequestHandlerInterface
     /**
      * Timetracking started depending if a Backend User is logged in.
      */
-    protected function initializeTimeTracker()
+    protected function initializeTimeTracker(): void
     {
         $configuredCookieName = trim($GLOBALS['TYPO3_CONF_VARS']['BE']['cookieName']) ?: 'be_typo_user';
 
@@ -430,7 +430,7 @@ class SymfonyFrontendRequestHandler implements RequestHandlerInterface
     /**
      * Creates an instance of TSFE and sets it as a global variable.
      */
-    protected function initializeController()
+    protected function initializeController(): void
     {
         $this->controller = GeneralUtility::makeInstance(
             TypoScriptFrontendController::class,
@@ -452,13 +452,9 @@ class SymfonyFrontendRequestHandler implements RequestHandlerInterface
     }
 
     /**
-     * @param Request $request
-     *
      * @throws \Exception
-     *
-     * @return ResponseInterface
      */
-    protected function handleSymfonyRequest(Request $symfonyRequest)
+    protected function handleSymfonyRequest(Request $symfonyRequest): ?ResponseInterface
     {
         $this->timeTracker->push('Symfony request handling', '');
 
