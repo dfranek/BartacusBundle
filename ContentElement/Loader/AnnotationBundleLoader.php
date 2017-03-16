@@ -26,6 +26,7 @@ use JMS\DiExtraBundle\Annotation as DI;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Config\Loader\FileLoader;
 use Symfony\Component\Config\Resource\DirectoryResource;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @DI\Service("bartacus.content_element.loader")
@@ -93,7 +94,7 @@ class AnnotationBundleLoader extends FileLoader
                     continue;
                 }
 
-                $class = $this->findClass($file);
+                $class = $this->findClass((string) $file);
                 if ($class) {
                     $refl = new \ReflectionClass($class);
                     if ($refl->isAbstract()) {
@@ -136,7 +137,7 @@ class AnnotationBundleLoader extends FileLoader
     {
         $class = false;
         $namespace = false;
-        $tokens = token_get_all(file_get_contents((string) $file));
+        $tokens = token_get_all(file_get_contents($file));
         for ($i = 0; isset($tokens[$i]); ++$i) {
             $token = $tokens[$i];
 
